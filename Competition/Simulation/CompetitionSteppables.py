@@ -500,7 +500,7 @@ class DeathSteppablePerimiter(SteppableBasePy):
                                 neighbourpixel.append(0)  # Boundary touches the medium
 
                 # Calculate shared perimeter percentage with opposing types
-                if typecell == 2 and len(neighbourpixel) > 0:  # Scrambled cells
+                if typecell == 2 and len(neighbourpixel) > 0:  # Scribble cells
                     perimeterpercentage = (
                         (neighbourpixel.count(1) + neighbourpixel.count(3) +
                          neighbourpixel.count(5) + neighbourpixel.count(7)) / len(neighbourpixel)
