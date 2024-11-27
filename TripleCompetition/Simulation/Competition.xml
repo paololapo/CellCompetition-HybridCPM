@@ -1,0 +1,124 @@
+<CompuCell3D Revision="2" Version="4.6.0">
+   
+   <Metadata> 
+      <!-- Basic properties simulation -->
+      <NumberOfProcessors>7</NumberOfProcessors>
+      <DebugOutputFrequency>10</DebugOutputFrequency>
+      <!-- <NonParallelModule Name="Potts"/> -->
+   </Metadata>
+   
+   
+   <Potts>
+      <!-- Basic properties of CPM (GGH) algorithm -->
+      <Dimensions x="1200" y="1600" z="1"/>
+      <Steps>24200</Steps>
+      <Temperature>10.0</Temperature>
+      <NeighborOrder>1</NeighborOrder>
+      <LatticeType>Square</LatticeType>
+   </Potts>
+   
+   
+    <Plugin Name="CellType">
+        <!-- Listing all cell types in the simulation -->
+        <CellType TypeId="0" TypeName="Medium"/>
+        <CellType TypeId="1" TypeName="Type1"/>
+        <CellType TypeId="2" TypeName="Type2"/>
+        <CellType TypeId="3" TypeName="Type3"/>
+
+        <CellType TypeId="9" TypeName="Type9"/>
+        <CellType TypeId="10" TypeName="Type10"/>
+        
+        <CellType TypeId="11" TypeName="Type11"/>
+    </Plugin>
+
+    
+    <Plugin Name="CenterOfMass"/>
+    
+    
+    <Plugin Name="NeighborTracker"/>
+    
+       
+   <!--
+   <Plugin Name="Volume">
+      <VolumeEnergyParameters CellType="Type1" LambdaVolume="2.0" TargetVolume="50"/>
+   </Plugin>
+   -->
+   
+   <Plugin Name="Volume"/>
+   
+   
+   <Plugin Name="Surface"/>
+   
+   
+    <Plugin Name="ExternalPotential">   
+      <!-- External force applied to cell. Each cell has different force and force components have to be managed in Python. -->
+      <!-- e.g. cell.lambdaVecX=0.5; cell.lambdaVecY=0.1 ; cell.lambdaVecZ=0.3; -->
+      <Algorithm>PixelBased</Algorithm>
+   </Plugin>
+   
+   
+    <Plugin Name="PixelTracker"/>
+
+   
+    <Plugin Name="BoundaryPixelTracker"/>
+   
+   
+    <Plugin Name="Contact">
+        <!-- Specification of adhesion energies -->
+        <Energy Type1="Medium" Type2="Medium">10.0</Energy>
+        <Energy Type1="Medium" Type2="Type1">10.0</Energy>
+        <Energy Type1="Medium" Type2="Type2">9.0</Energy>
+        <Energy Type1="Medium" Type2="Type9">10.0</Energy>
+        <Energy Type1="Medium" Type2="Type10">9.0</Energy>
+        <Energy Type1="Type1" Type2="Type1">8.0</Energy>
+        <Energy Type1="Type1" Type2="Type2">9.0</Energy>
+        <Energy Type1="Type1" Type2="Type9">8.0</Energy>
+        <Energy Type1="Type1" Type2="Type10">8.0</Energy>
+        <Energy Type1="Type2" Type2="Type2">8.0</Energy>
+        <Energy Type1="Type2" Type2="Type9">8.0</Energy>
+        <Energy Type1="Type2" Type2="Type10">8.0</Energy>
+        <Energy Type1="Type9" Type2="Type9">8.0</Energy>
+        <Energy Type1="Type9" Type2="Type10">8.0</Energy>
+        <Energy Type1="Type10" Type2="Type10">8.0</Energy>
+
+        <Energy Type1="Medium" Type2="Type3">10.0</Energy>
+        <Energy Type1="Type1" Type2="Type3">8.0</Energy>
+        <Energy Type1="Type1" Type2="Type11">9.0</Energy>
+        <Energy Type1="Type2" Type2="Type3">9.0</Energy>
+        <Energy Type1="Type2" Type2="Type11">9.0</Energy>
+        <Energy Type1="Type3" Type2="Type3">8.0</Energy>
+        <Energy Type1="Type3" Type2="Type9">8.0</Energy>
+        <Energy Type1="Type3" Type2="Type10">8.0</Energy>
+        <Energy Type1="Type3" Type2="Type11">8.0</Energy>
+
+        <NeighborOrder>1</NeighborOrder>
+    </Plugin>
+
+    
+    <Steppable Type="UniformInitializer">
+       <Region>
+          <BoxMin x="200" y="300" z="0"/>
+          <BoxMax x="1000" y="1300" z="1"/>
+          <Gap>100</Gap>
+          <Width>10</Width>
+          <Types>Type3</Types>
+       </Region>
+    </Steppable>
+    
+    
+    <Steppable Type="PIFInitializer">
+      
+      <!-- Initial layout of cells using PIFF file. Piff files can be generated using PIFGEnerator -->
+      <PIFName>Simulation/Competition.piff</PIFName>
+    </Steppable>
+   
+    <Steppable Frequency="100" Type="PIFDumper">
+      
+      <!-- Periodically stores cell layout configuration in a piff format -->
+      <PIFName>Competition</PIFName>
+      <PIFFileExtension>piff</PIFFileExtension>
+    </Steppable>
+    
+   
+   
+</CompuCell3D>
