@@ -41,6 +41,13 @@ Open the IDE and start writing your code:
 python -m cc3d.twedit5
 ```
 
+**6) Using CompuCell3D without GUI** <br>
+You might want to run a simulation via command line (*batch mode*), without using the graphical interface. You can do it via:
+```
+python -m cc3d.run_script -i <full path to .cc3d file>
+```
+Moreover, you might want to make a *direct call* to CompuCell3D from a Python file. In this way, you can better run multiple simulation to compare different settings (e.g. to fine-tune some parameters). This is allowed and explained in the [official documentation](https://compucell3dreferencemanual.readthedocs.io/en/latest/calling_cc3d_directly_from_python.html)
+
 
 ## CompuCell3D project organization
 A typical CompuCell3D project is organized in the following files: <br>
