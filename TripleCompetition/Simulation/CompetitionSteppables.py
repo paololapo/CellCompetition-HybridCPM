@@ -23,7 +23,7 @@ growthratescrb=3.4
 stiffness_kd=0.9
 stiffness_wt=2.0
 
-growthrate3=5
+growthrate3=10
 stiffness_3=1.5
 
 CI = 0.1
@@ -180,10 +180,10 @@ class GrowthSteppableLinear(SteppableBasePy):
         time = (mcs - relaxtime) / float(10)
         
         # Add data points to the plot for visualization and save to file
-        self.pW.addDataPoint('Avg Vt Added', time, avgtvadded)
-        self.pW.savePlotAsData('avg_vt_added.txt')
-        self.pW.addDataPoint('Avg V', time, avgV)
-        self.pW.savePlotAsData('avg_v.txt')
+        #self.pW.addDataPoint('Avg Vt Added', time, avgtvadded)
+        #self.pW.savePlotAsData('avg_vt_added.txt')
+        #self.pW.addDataPoint('Avg V', time, avgV)
+        #self.pW.savePlotAsData('avg_v.txt')
 
         # Optional: Growth based on a chemical concentration field (commented by default)
         # Uncomment this block to make growth a function of chemical concentration
@@ -373,7 +373,7 @@ class DeathSteppable(SteppableBasePy):
                     totdens += dens
                     cellcount += 1  # Increment cell count
 
-                    # Check for density-dependent apoptosis for scrambled cells (types 2, 4, 6, 8)
+                    # Check for density-dependent apoptosis for scrambled cells (type 2)
                     if cell.type == 2:
                         # Sigmoid-based probability function for density-dependent death
                         if 0.00072194 / (1 + np.exp(-509.4 * (dens * 3 - 0.0067))) > random.random():
@@ -383,7 +383,7 @@ class DeathSteppable(SteppableBasePy):
                             deathcount += 1
                             apopscrb += 1
 
-                    # Check for density-dependent apoptosis for wild-type cells (types 1, 3, 5, 7)
+                    # Check for density-dependent apoptosis for wild-type cells (type 1)
                     if cell.type == 1:
                         # Sigmoid-based probability function for density-dependent death
                         if 0.00033074 / (1 + np.exp(-235.8 * (dens * 3 - 0.0152))) > random.random():
@@ -481,8 +481,7 @@ class DeathSteppablePerimiter(SteppableBasePy):
                 # Calculate shared perimeter percentage with opposing types
                 if typecell == 2 and len(neighbourpixel) > 0:  # Scribble cells
                     perimeterpercentage = (
-                        (neighbourpixel.count(1) + neighbourpixel.count(3) +
-                         neighbourpixel.count(5) + neighbourpixel.count(7)) / len(neighbourpixel)
+                        (neighbourpixel.count(1)) / len(neighbourpixel)
                     )
                     # Density-dependent apoptosis probability
                     if 3 * (0.000416 * perimeterpercentage) > random.random():
@@ -494,8 +493,7 @@ class DeathSteppablePerimiter(SteppableBasePy):
 
                 elif typecell == 1 and len(neighbourpixel) > 0:  # Wild-type cells
                     perimeterpercentage = (
-                        (neighbourpixel.count(2) + neighbourpixel.count(4) +
-                         neighbourpixel.count(6) + neighbourpixel.count(8)) / len(neighbourpixel)
+                        (neighbourpixel.count(2)) / len(neighbourpixel)
                     )
                     # Contact-dependent apoptosis probability
                     if 10 * (0.0000416 * perimeterpercentage) > random.random():
@@ -550,8 +548,8 @@ class neighbourdata(SteppableBasePy):
         )
 
         # Add two plots to the window for wild-type and scrambled cells
-        self.pW.addPlot('cellcount WT', _style='Dots', _color='green', _size=5)  # Wild-type cell count
-        self.pW.addPlot('cellcount scrb', _style='Dots', _color='red', _size=5)  # Scrambled cell count
+        #self.pW.addPlot('cellcount WT', _style='Dots', _color='green', _size=5)  # Wild-type cell count
+        #self.pW.addPlot('cellcount scrb', _style='Dots', _color='red', _size=5)  # Scrambled cell count
 
         # Optional: Uncomment the below section to track cell volume instead
         # self.pW = self.addNewPlotWindow(
