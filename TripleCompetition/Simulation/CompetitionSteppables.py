@@ -640,7 +640,7 @@ class tracking(SteppableBasePy):
         Optionally saves the tracking data to a file (currently commented out).
         """
         # Uncomment the line below to save `trackingfile` data to a file
-        np.savetxt(self.file_name, trackingfile)
+        np.savetxt(self.file_name, trackingfile, delimiter=',', header="xCOM,yCOM,time,cell_id,cell_type", comments='')
         return
  
             
