@@ -7,8 +7,9 @@ import sys
 import numpy as np
 import random
 from tempfile import TemporaryFile
+import os
 
-#from PlayerPython import * 
+#from PlayerPython import *
 #from cc3d import PlayerPython
 #from PySteppables import *
 #from PySteppablesExamples import MitosisSteppableBase
@@ -26,7 +27,7 @@ stiffness_wt=2.0
 growthrate3=10
 stiffness_3=1.5
 
-CI = 0.1
+CI = 1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
 minvol=1100
 maxvol=2200
@@ -85,8 +86,8 @@ class ConstraintInitializerSteppableAdder(SteppableBasePy):
         
         # Initialize plot window for visualizing initial volume distribution
         volList = [] # List to store initial volumes
-        self.pW=self.addNewPlotWindow(_title='initial seeding volumes' ,_xAxisTitle='initial volume',_yAxisTitle='N', _xScaleType='linear',_yScaleType='linear')
-        self.pW.addHistogramPlot(_plotName='initialVol',_color='green',_alpha=100)# _alpha is transparency 0 is transparent, 255 is opaque        
+        #self.pW=self.addNewPlotWindow(_title='initial seeding volumes' ,_xAxisTitle='initial volume',_yAxisTitle='N', _xScaleType='linear',_yScaleType='linear')
+        #self.pW.addHistogramPlot(_plotName='initialVol',_color='green',_alpha=100)# _alpha is transparency 0 is transparent, 255 is opaque        
 
         # Assign initial target volume and Lambda based on cell type
         for cell in self.cellList:
@@ -123,18 +124,19 @@ class GrowthSteppableLinear(SteppableBasePy):
         
     def start(self):
         # Create a plot window to track the average target volume added and total cell volume over time
-        self.pW = self.addNewPlotWindow(
-            _title='AvgVtAdded',  # Title of the plot
-            _xAxisTitle='Time (Frames)',  # X-axis label
-            _yAxisTitle='AvgVtAdded',  # Y-axis label
-            _xScaleType='linear',  # Linear scaling for the X-axis
-            _yScaleType='linear'  # Linear scaling for the Y-axis
-        )
+        #self.pW = self.addNewPlotWindow(
+        #    _title='AvgVtAdded',  # Title of the plot
+        #    _xAxisTitle='Time (Frames)',  # X-axis label
+        #    _yAxisTitle='AvgVtAdded',  # Y-axis label
+        #    _xScaleType='linear',  # Linear scaling for the X-axis
+        #    _yScaleType='linear'  # Linear scaling for the Y-axis
+        #)
         
         # Add a plot to track the average target volume added, displayed as green dots
-        self.pW.addPlot('Avg Vt Added', _style='Dots', _color='green', _size=5)
+        #self.pW.addPlot('Avg Vt Added', _style='Dots', _color='green', _size=5)
         # Add a plot to track the average total volume, displayed as red dots
-        self.pW.addPlot('Avg V', _style='Dots', _color='red', _size=5)
+        #self.pW.addPlot('Avg V', _style='Dots', _color='red', _size=5)
+        return
         
     def step(self, mcs):
         # Initialize counters for the number of cells, total volume added, and total cell volume
@@ -539,13 +541,13 @@ class neighbourdata(SteppableBasePy):
         Sets up a plot window for tracking cell counts over time.
         """
         # Create a new plot window to display cell count over time
-        self.pW = self.addNewPlotWindow(
-            _title='CellCount v Time',  # Title of the plot
-            _xAxisTitle='Time(Frames)',  # X-axis label
-            _yAxisTitle='Cell Count',   # Y-axis label
-            _xScaleType='linear',       # Linear scaling for the x-axis
-            _yScaleType='linear'        # Linear scaling for the y-axis
-        )
+        #self.pW = self.addNewPlotWindow(
+        #    _title='CellCount v Time',  # Title of the plot
+        #    _xAxisTitle='Time(Frames)',  # X-axis label
+        #    _yAxisTitle='Cell Count',   # Y-axis label
+        #    _xScaleType='linear',       # Linear scaling for the x-axis
+        #    _yScaleType='linear'        # Linear scaling for the y-axis
+        #)
 
         # Add two plots to the window for wild-type and scrambled cells
         #self.pW.addPlot('cellcount WT', _style='Dots', _color='green', _size=5)  # Wild-type cell count
@@ -560,6 +562,7 @@ class neighbourdata(SteppableBasePy):
         #     _yScaleType='log'
         # )
         # self.pW.addPlot('cellvol WT', _style='Dots', _color='blue', _size=5)
+        return
 
     def step(self, mcs):
         """
@@ -602,11 +605,12 @@ class neighbourdata(SteppableBasePy):
 # Class to track cell positions and states over time
 class tracking(SteppableBasePy):   
     
-    def __init__(self, frequency=10):
+    def __init__(self, frequency=10, file_name="simulation"):
         """
         Initializes the steppable with a specified execution frequency.
         """
-        SteppableBasePy.__init__(self, frequency)     
+        SteppableBasePy.__init__(self, frequency)   
+        self.file_name = file_name
 
     def start(self): 
         """
@@ -622,19 +626,11 @@ class tracking(SteppableBasePy):
         Tracks cell positions, states, and types, and stores the data in `trackingfile`.
         """
         for cell in self.cellList:
-            # Determine the state of the cell
-            # State 1 indicates the cell is apoptotic (type 9 or 10 or 11)
-            # State 0 indicates a non-apoptotic cell
-            if cell.type in [9, 10, 11]:
-                state = 1
-            else:
-                state = 0
-            
             # Calculate simulation time adjusted by relaxation time
             time = (mcs - relaxtime) / float(10)
             
             # Record relevant cell data: position, time, ID, type, and state
-            ar1 = [cell.xCOM, cell.yCOM, int(time), int(cell.id), int(cell.type), state]
+            ar1 = [cell.xCOM, cell.yCOM, int(time), int(cell.id), int(cell.type)]
             trackingfile.append(ar1)  # Append the data to the tracking list
 
     def finish(self):
@@ -644,13 +640,15 @@ class tracking(SteppableBasePy):
         Optionally saves the tracking data to a file (currently commented out).
         """
         # Uncomment the line below to save `trackingfile` data to a file
-        # np.savetxt('', trackingfile)
+        np.savetxt(self.file_name, trackingfile)
         return
  
             
 
 
 # Class to clean up cells during simulation based on specific criteria
+# This cleanup steppable is designed to remove cells either due to density-dependent death 
+# (low volume) or because they are apoptotic (cell types 9 and 10).
 class cleanup(SteppableBasePy):     
     def __init__(self, frequency=100):
         """
@@ -685,6 +683,19 @@ class cleanup(SteppableBasePy):
         # Uncomment the line below to save `extrusions` data to a file
         # np.savetxt('', extrusions)   
         return
+        
 
-# This cleanup steppable is designed to remove cells either due to density-dependent death 
-# (low volume) or because they are apoptotic (cell types 9 and 10).
+
+# class SimulationStopperSteppable(SteppableBasePy):
+#     def __init__(self, frequency=1, stop_mcs=1000):
+#         SteppableBasePy.__init__(self, frequency)
+#         self.stop_mcs = stop_mcs
+
+#     def step(self, mcs):
+#         """
+#         Check if the current MCS matches the stopping point and stop the simulation.
+#         :param mcs: Current Monte Carlo Step
+#         """
+#         if mcs >= self.stop_mcs:
+#             print(f"Stopping simulation at MCS {mcs}")
+#             self.stop_simulation()

@@ -1,4 +1,6 @@
 <CompuCell3D Revision="2" Version="4.6.0">
+
+   <OutputDirectory>home/lapo/Desktop/Uni/CellCompetition/TripleCompetition/Files</OutputDirectory>
    
    <Metadata> 
       <!-- Basic properties simulation -->
@@ -11,7 +13,7 @@
    <Potts>
       <!-- Basic properties of CPM (GGH) algorithm -->
       <Dimensions x="1200" y="1600" z="1"/>
-      <Steps>24200</Steps>
+      <Steps>90</Steps>
       <Temperature>10.0</Temperature>
       <NeighborOrder>1</NeighborOrder>
       <LatticeType>Square</LatticeType>

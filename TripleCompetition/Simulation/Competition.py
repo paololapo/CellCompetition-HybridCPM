@@ -1,6 +1,10 @@
 from cc3d import CompuCellSetup
 from CompetitionSteppables import *
+import os
 
+name = "Simulation2"
+path_to_save = "/home/lapo/Desktop/Uni/CellCompetition/TripleCompetition/Files"
+file_name = os.path.join(path_to_save, name)
 
 #CompuCellSetup.register_steppable(steppable=countType1(frequency=1))
 #CompuCellSetup.register_steppable(steppable=SillySteppable(frequency=1))
@@ -30,10 +34,13 @@ CompuCellSetup.register_steppable(steppable=DeathSteppable(frequency=10))
 CompuCellSetup.register_steppable(steppable=neighbourdata(frequency=10))
 
 # Registering the tracking steppable, which logs information about cell movement and state
-CompuCellSetup.register_steppable(steppable=tracking(frequency=10))
+CompuCellSetup.register_steppable(steppable=tracking(frequency=10, file_name=file_name))
 
 # Registering the cleanup steppable, which removes cells based on certain conditions (like low volume)
 CompuCellSetup.register_steppable(steppable=cleanup(frequency=1000))
+
+# Stop the simulation after a given number of MCS
+#CompuCellSetup.register_steppable(steppable=SimulationStopperSteppable(frequency=1, stop_mcs=stop_mcs))
 
 # Start the simulation after all steppables have been registered
 CompuCellSetup.run()
