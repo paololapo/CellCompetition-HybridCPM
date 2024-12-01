@@ -603,14 +603,14 @@ class neighbourdata(SteppableBasePy):
  
 
 # Class to track cell positions and states over time
-class tracking(SteppableBasePy):   
-    
+class tracking(SteppableBasePy):    
     def __init__(self, frequency=10, file_name="simulation"):
         """
         Initializes the steppable with a specified execution frequency.
         """
         SteppableBasePy.__init__(self, frequency)   
         self.file_name = file_name
+        self.init_time = 0
 
     def start(self): 
         """
@@ -619,12 +619,15 @@ class tracking(SteppableBasePy):
         """
         global trackingfile  # Global variable to store tracking data for all cells
         trackingfile = []
+        self.init_time = datetime.now()
+        print("Start time (h-m-s): ", self.init_time.strftime('%H-%M-%S'))
 
     def step(self, mcs): 
         """
         Executes at each time step (defined by frequency).
         Tracks cell positions, states, and types, and stores the data in `trackingfile`.
         """
+        if mcs%100 == 0: print("mcs=", mcs, end="\r")
         for cell in self.cellList:
             # Calculate simulation time adjusted by relaxation time
             time = (mcs - relaxtime) / float(10)
@@ -639,6 +642,8 @@ class tracking(SteppableBasePy):
         Finalizes the data collection process.
         Optionally saves the tracking data to a file (currently commented out).
         """
+        time_taken = datetime.now() - self.init_time
+        print("Time taken: ", time_taken)
         # Uncomment the line below to save `trackingfile` data to a file
         np.savetxt(self.file_name, trackingfile, delimiter=',', header="xCOM,yCOM,time,cell_id,cell_type", comments='')
         return
