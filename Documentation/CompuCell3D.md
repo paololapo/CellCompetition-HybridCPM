@@ -2,6 +2,7 @@
 This file contains a list of useful information and notes to start using CompuCell3D:
 - [How to install CompuCell3D](#how-to-install-compucell3d)
 - [CompuCell3D project organization](#compucell3d-project-organization)
+- [Parameters scan](#parameters-scan)
 
 ## How to install CompuCell3d
 Brief recap of what to do to install CompuCell3D based on the [official documentation](https://compucell3d.org/SrcBin). <br>
@@ -45,6 +46,10 @@ python -m cc3d.twedit5
 You might want to run a simulation via command line (*batch mode*), without using the graphical interface. You can do it via:
 ```
 python -m cc3d.run_script -i <full path to .cc3d file>
+```
+Optionally, you can provide a custom output directory via `--output-dir=<full path>`. In this directory will be stored a copy of the files for the simulation. Example: 
+```
+python -m cc3d.run_script -i /mnt/CellCompetition/TripleCompetition/TripleCompetition.cc3d --output-dir=/mnt/CellCompetition_LastSimul/
 ```
 Moreover, you might want to make a *direct call* to CompuCell3D from a Python file. In this way, you can better run multiple simulation to compare different settings (e.g. to fine-tune some parameters). This is allowed and explained in the [official documentation](https://compucell3dreferencemanual.readthedocs.io/en/latest/calling_cc3d_directly_from_python.html)
 
@@ -115,3 +120,27 @@ The **Run** file contains the script that sets up and launches the entire simula
     CompuCellSetup.run()
     ```
 
+## Parameters Scan
+In many contexts, you might want to scan over a set of parameters. To do so, you need to add a `ParameterScanSpecs.json` in the Simulation folder. This file should look like:
+```json
+{
+    "version": "4.6.0",
+    "parameter_list": {
+        "stiffness_kd": {
+            "values": [0.4, 0.8, 1.2, 2, 2.5]
+        }
+    }
+}
+```
+Moreover, you need to modify your Steppable Python script as follows:
+```python
+stiffness_kd = {{stiffness_kd}}
+```
+Finally, to call the scan you need to run:
+```
+paramScan.command --input=<path to the CC3D project file (*.cc3d)> --output-dir=<path to the output folder to store parameter scan results> --output-frequency=<simulation snapshot output frequency> --screenshot-output-frequency=<screenshot output frequency> --gui --install-dir=<CC3D install directory>
+```
+For instance:
+```
+cc3d_paramScan.sh --input=/mnt/CellCompetition/TripleCompetition/TripleCompetition.cc3d --output-dir=/mnt/CellCompetition_ScanParam --output-frequency=100 --screenshot-output-frequency=100 --install-dir=/mnt/miniconda/envs/cc3d_460_310/bin
+```
