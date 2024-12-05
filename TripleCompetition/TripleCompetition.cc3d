@@ -2,4 +2,5 @@
    <XMLScript Type="XMLScript">Simulation/Competition.xml</XMLScript>
    <PythonScript Type="PythonScript">Simulation/Competition.py</PythonScript>
    <Resource Type="Python">Simulation/CompetitionSteppables.py</Resource>
+   <ParameterScan Type="ParameterScan">Simulation/ParameterScanSpecs.json</ParameterScan>
 </Simulation>
