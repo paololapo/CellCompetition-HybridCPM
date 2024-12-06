@@ -28,7 +28,7 @@ stiffness_wt=2.0
 growthrate3=10
 stiffness_3=1.5
 
-CI = {{CI}} # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
+CI = 0.1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
 minvol=1100
 maxvol=2200
@@ -388,6 +388,16 @@ class DeathSteppable(SteppableBasePy):
 
                     # Check for density-dependent apoptosis for wild-type cells (type 1)
                     if cell.type == 1:
+                        # Sigmoid-based probability function for density-dependent death
+                        if 0.00033074 / (1 + np.exp(-235.8 * (dens * 3 - 0.0152))) > random.random():
+                            cell.type = 9  # Mark cell as apoptotic
+                            cell.targetVolume = 0
+                            cell.lambdaVolume = 2  # Soft constraint for cell volume
+                            deathcount += 1
+                            apopwt += 1
+
+                    # Check for density-dependent apoptosis for type 3 cells
+                    if cell.type == 3:
                         # Sigmoid-based probability function for density-dependent death
                         if 0.00033074 / (1 + np.exp(-235.8 * (dens * 3 - 0.0152))) > random.random():
                             cell.type = 9  # Mark cell as apoptotic
