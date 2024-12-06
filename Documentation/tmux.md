@@ -1,5 +1,4 @@
 # Using `tmux` for Persistent Terminal Sessions
-Most of the scripts in this folder involve heavy computations with possibly day-long computing time. We exploited the CloudVeneto computation resources, creating a virtual machine to run the code. By using `tmux`, you can ensure that your processes continue running on the virtual machine, even when you close your terminal window. </br>
 `tmux` is a terminal multiplexer that allows you to run multiple terminal sessions within a single window. It is especially useful when working on remote virtual machines, as it allows you to keep processes running even after closing the terminal. Here's how to use `tmux` effectively:
 
 ### 1. Creating a New `tmux` Session

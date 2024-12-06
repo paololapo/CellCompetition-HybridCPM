@@ -21,13 +21,14 @@ global relaxtime
 global adderlist
 growthratewt=6.3
 growthratescrb=3.4
-stiffness_kd=0.9
+stiffness_kd=0.4
+#stiffness_kd = {{stiffness_kd}}
 stiffness_wt=2.0
 
 growthrate3=10
 stiffness_3=1.5
 
-CI = 1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
+CI = {{CI}} # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
 minvol=1100
 maxvol=2200
