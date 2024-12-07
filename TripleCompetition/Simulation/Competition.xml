@@ -28,8 +28,7 @@
         <CellType TypeId="3" TypeName="Type3"/>
 
         <CellType TypeId="9" TypeName="Type9"/>
-        <CellType TypeId="10" TypeName="Type10"/>
-        
+        <CellType TypeId="10" TypeName="Type10"/>       
         <CellType TypeId="11" TypeName="Type11"/>
     </Plugin>
 
@@ -84,10 +83,10 @@
         <Energy Type1="Type10" Type2="Type10">8.0</Energy>
 
         <Energy Type1="Medium" Type2="Type3">10.0</Energy>
-        <Energy Type1="Type1" Type2="Type3">8.0</Energy>
-        <Energy Type1="Type1" Type2="Type11">9.0</Energy>
+        <Energy Type1="Type1" Type2="Type3">9.0</Energy>
+        <Energy Type1="Type1" Type2="Type11">8.0</Energy>
         <Energy Type1="Type2" Type2="Type3">9.0</Energy>
-        <Energy Type1="Type2" Type2="Type11">9.0</Energy>
+        <Energy Type1="Type2" Type2="Type11">8.0</Energy>
         <Energy Type1="Type3" Type2="Type3">8.0</Energy>
         <Energy Type1="Type3" Type2="Type9">8.0</Energy>
         <Energy Type1="Type3" Type2="Type10">8.0</Energy>
@@ -97,7 +96,6 @@
     </Plugin>
 
     
-    <!--
     <Steppable Type="UniformInitializer">
        <Region>
           <BoxMin x="200" y="300" z="0"/>
@@ -107,7 +105,6 @@
           <Types>Type3</Types>
        </Region>
     </Steppable>
-    -->
     
     
     <Steppable Type="PIFInitializer">

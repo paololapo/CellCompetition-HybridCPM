@@ -2,7 +2,7 @@ from cc3d import CompuCellSetup
 from CompetitionSteppables import *
 import os
 
-name = "ScanCI_"+str(CI)
+name = "ScanStiffness_3_"+str(stiffness_3)
 
 path_to_save = "/home/lapo/Desktop/Uni/CellCompetition/TripleCompetition/Files"
 path_to_save = "/mnt/CellCompetition/TripleCompetition/Files"

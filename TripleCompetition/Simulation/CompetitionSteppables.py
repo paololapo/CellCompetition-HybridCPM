@@ -25,8 +25,8 @@ stiffness_kd=0.4
 #stiffness_kd = {{stiffness_kd}}
 stiffness_wt=2.0
 
-growthrate3=10
-stiffness_3=1.5
+growthrate3=4.8
+stiffness_3={{stiffness_3}}
 
 CI = 0.1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
