@@ -26,7 +26,8 @@ stiffness_kd=0.4
 stiffness_wt=2.0
 
 growthrate3=4.8
-stiffness_3={{stiffness_3}}
+stiffness_3=1
+p_apo_3_coeff=1
 
 CI = 0.1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
@@ -399,7 +400,7 @@ class DeathSteppable(SteppableBasePy):
                     # Check for density-dependent apoptosis for type 3 cells
                     if cell.type == 3:
                         # Sigmoid-based probability function for density-dependent death
-                        if 0.00033074 / (1 + np.exp(-235.8 * (dens * 3 - 0.0152))) > random.random():
+                        if p_apo_3_coeff*0.00033074 / (1 + np.exp(-235.8 * (dens * 3 - 0.0152))) > random.random():
                             cell.type = 9  # Mark cell as apoptotic
                             cell.targetVolume = 0
                             cell.lambdaVolume = 2  # Soft constraint for cell volume

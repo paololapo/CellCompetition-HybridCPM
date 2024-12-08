@@ -1,8 +1,8 @@
 {
     "version": "4.6.0",
     "parameter_list": {
-        "stiffness_3": {
-            "values": [1, 1.6]
+        "p_apo_3_coeff": {
+            "values": [0.25, 0.75, 1.5]
         }
     }
 }
