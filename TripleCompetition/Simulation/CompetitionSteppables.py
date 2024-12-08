@@ -28,6 +28,7 @@ stiffness_wt=2.0
 growthrate3=4.8
 stiffness_3=1
 p_apo_3_coeff=1
+volume_3_coeff=2
 
 CI = 0.1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
@@ -93,6 +94,8 @@ class ConstraintInitializerSteppableAdder(SteppableBasePy):
 
         # Assign initial target volume and Lambda based on cell type
         for cell in self.cellList:
+            id = cell.id
+
             # Randomly assign target volume using a normal distribution
             # cell.targetVolume=random.randint(minvol-100,maxvol+100)    
             # cell.targetVolume=random.normalvariate(2100, 300)
@@ -102,14 +105,16 @@ class ConstraintInitializerSteppableAdder(SteppableBasePy):
             # Assign Lambda values based on cell type
             if cell.type == 1:  # For cell type 1
                 cell.lambdaVolume = stiffness_wt
+                add1 = [id, 1800, cell.type]
             elif cell.type == 2:  # For cell type 2
                 cell.lambdaVolume = stiffness_kd
+                add1 = [id, 1800, cell.type]
             elif cell.type == 3:
+                cell.targetVolume = round(random.normalvariate(volume_3_coeff*1800, 500))
                 cell.lambdaVolume = stiffness_3
+                add1 = [id, volume_3_coeff*1800, cell.type]
                 
             # Store cell information in a list for further use
-            id = cell.id
-            add1 = [id, 1800, cell.type]
             adderlist.append(add1)
             volList.append(cell.targetVolume)  # Append the volume to the volume list
   
@@ -241,7 +246,9 @@ class MitosisSteppableAdder(MitosisSteppableBase):
                     # Conditions for division:
                     # - Cell volume exceeds a threshold based on initial volume and simulation time.
                     # - Cell type is not 9 or 10 (reserved for other uses).
-                    if x[0] == cell.id and cell.volume - x[1] > (1800 - (mcs / 60)) and (cell.type not in [9, 10, 11]):
+                    if cell.type == 3: f=volume_3_coeff 
+                    else: f=1
+                    if x[0] == cell.id and cell.volume - x[1] > (f*1800 - (mcs / 60)) and (cell.type not in [9, 10, 11]):
                         cells_to_divide.append(cell)  
                         # Log volume information for analysis
                         Volumeanalysis.append([x[0], (mcs - relaxtime) / float(10), x[1], cell.volume, cell.type])
