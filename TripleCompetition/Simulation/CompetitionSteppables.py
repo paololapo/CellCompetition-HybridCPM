@@ -14,9 +14,6 @@ import os
 #from PySteppables import *
 #from PySteppablesExamples import MitosisSteppableBase
             
-            
-global minvol
-global maxvol
 global relaxtime
 global adderlist
 growthratewt=6.3
@@ -28,12 +25,10 @@ stiffness_wt=2.0
 growthrate3=4.8
 stiffness_3=1
 p_apo_3_coeff=1
-volume_3_coeff=2
+volume_3_coeff={{volume_3_coeff}}
 
 CI = 0.1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
-minvol=1100
-maxvol=2200
 relaxtime=200
           
           
