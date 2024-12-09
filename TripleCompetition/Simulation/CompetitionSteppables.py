@@ -24,8 +24,8 @@ stiffness_wt=2.0
 
 growthrate3=4.8
 stiffness_3=1
-p_apo_3_coeff=1
-volume_3_coeff={{volume_3_coeff}}
+p_apo_3_coeff={{p_apo_3_coeff}}
+volume_3_coeff=1.5
 
 CI = 0.1 # Sensitivity to Contact Inhibition (related to k, default: CI=0.1)
 adderlist=[]
