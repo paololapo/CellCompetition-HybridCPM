@@ -1,10 +1,8 @@
 <CompuCell3D Revision="2" Version="4.6.0">
-
-   <OutputDirectory>home/lapo/Desktop/Uni/CellCompetition/TripleCompetition/Files</OutputDirectory>
-   
+  
    <Metadata> 
       <!-- Basic properties simulation -->
-      <NumberOfProcessors>7</NumberOfProcessors>
+      <NumberOfProcessors>8</NumberOfProcessors>
       <DebugOutputFrequency>10</DebugOutputFrequency>
       <!-- <NonParallelModule Name="Potts"/> -->
    </Metadata>

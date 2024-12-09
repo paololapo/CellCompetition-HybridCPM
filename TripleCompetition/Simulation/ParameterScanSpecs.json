@@ -2,7 +2,7 @@
     "version": "4.6.0",
     "parameter_list": {
         "p_apo_3_coeff": {
-            "values": [0.25, 0.5, 1, 1.5]
+            "values": [0.1, 0.05]
         }
     }
 }
