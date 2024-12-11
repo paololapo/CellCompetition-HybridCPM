@@ -2,7 +2,8 @@ from cc3d import CompuCellSetup
 from CompetitionSteppables import *
 import os
 
-name = "ScanPapoV_3_"+str(p_apo_3_coeff)
+name = "ScanGap_"+str({{gap}})
+print("Starting simulation: ", name)
 
 path_to_save = "/home/lapo/Desktop/Uni/CellCompetition/TripleCompetition/Files"
 path_to_save = "/mnt/CellCompetition/TripleCompetition/Files"
@@ -30,10 +31,10 @@ CompuCellSetup.register_steppable(steppable=MitosisSteppableAdder(frequency=10))
 CompuCellSetup.register_steppable(steppable=CellMotilitySteppable(frequency=10))
 
 # Registering the DeathSteppable, which manages apoptosis (cell death) in the simulation
-CompuCellSetup.register_steppable(steppable=DeathSteppable(frequency=10))
+#CompuCellSetup.register_steppable(steppable=DeathSteppable(frequency=10))
 
 # Registering steppeable for cell death due to biochemical competition
-#CompuCellSetup.register_steppable(steppable=DeathSteppablePerimiter(frequency=10))
+CompuCellSetup.register_steppable(steppable=DeathSteppablePerimiter(frequency=10))
 
 # Registering the neighbourdata steppable, which tracks the number of neighboring cells
 CompuCellSetup.register_steppable(steppable=neighbourdata(frequency=10))

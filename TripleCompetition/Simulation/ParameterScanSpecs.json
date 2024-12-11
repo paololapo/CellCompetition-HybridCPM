@@ -1,8 +1,8 @@
 {
     "version": "4.6.0",
     "parameter_list": {
-        "Jhetero": {
-            "values": [2, 5, 8, 12, 20]
+        "gap": {
+            "values": [50, 100, 150]
         }
     }
 }
