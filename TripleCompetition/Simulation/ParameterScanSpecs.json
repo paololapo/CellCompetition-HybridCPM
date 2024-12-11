@@ -1,8 +1,8 @@
 {
     "version": "4.6.0",
     "parameter_list": {
-        "p_apo_3_coeff": {
-            "values": [0.1, 0.05]
+        "Jhetero": {
+            "values": [2, 5, 8, 12, 20]
         }
     }
 }
