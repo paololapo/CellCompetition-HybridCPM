@@ -16,13 +16,13 @@ import os
             
 global relaxtime
 global adderlist
-growthratewt=6.3
-growthratescrb=3.4
-stiffness_kd=0.4
+growthratewt=6 #(default: 6.3)
+growthratescrb=6 #(default: 3.4)
+stiffness_kd=1 #(default: 0.4)
 #stiffness_kd = {{stiffness_kd}}
-stiffness_wt=2.0
+stiffness_wt=1 #(default: 2.0)
 
-growthrate3=4.8
+growthrate3=6
 stiffness_3=1
 p_apo_3_coeff=1
 volume_3_coeff=1

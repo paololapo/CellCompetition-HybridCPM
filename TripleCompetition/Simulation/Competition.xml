@@ -83,7 +83,7 @@
         <Energy Type1="Medium" Type2="Type3">10.0</Energy>
         <Energy Type1="Type1" Type2="Type3">9.0</Energy>
         <Energy Type1="Type1" Type2="Type11">8.0</Energy>
-        <Energy Type1="Type2" Type2="Type3">9.0</Energy>
+        <Energy Type1="Type2" Type2="Type3">{{J23}}</Energy>
         <Energy Type1="Type2" Type2="Type11">8.0</Energy>
         <Energy Type1="Type3" Type2="Type3">8.0</Energy>
         <Energy Type1="Type3" Type2="Type9">8.0</Energy>
@@ -97,7 +97,7 @@
        <Region>
           <BoxMin x="200" y="300" z="0"/>
           <BoxMax x="1000" y="1300" z="1"/>
-          <Gap>{{gap}}</Gap>
+          <Gap>100</Gap>
           <Width>10</Width>
           <Types>Type3</Types>
        </Region>

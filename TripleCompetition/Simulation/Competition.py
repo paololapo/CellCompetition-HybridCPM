@@ -2,7 +2,7 @@ from cc3d import CompuCellSetup
 from CompetitionSteppables import *
 import os
 
-name = "ScanGap_"+str({{gap}})
+name = "ScanJ23_"+str({{J23}})
 print("Starting simulation: ", name)
 
 path_to_save = "/home/lapo/Desktop/Uni/CellCompetition/TripleCompetition/Files"
