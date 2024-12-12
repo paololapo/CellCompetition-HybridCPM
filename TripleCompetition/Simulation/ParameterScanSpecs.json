@@ -2,7 +2,7 @@
     "version": "4.6.0",
     "parameter_list": {
         "J23": {
-            "values": [2, 9, 16]
+            "values": [1, 5, 9, 13, 17]
         }
     }
 }

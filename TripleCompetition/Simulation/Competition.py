@@ -2,11 +2,11 @@ from cc3d import CompuCellSetup
 from CompetitionSteppables import *
 import os
 
-name = "ScanJ23_"+str({{J23}})
+name = "ScanJ23_2_"+str({{J23}})
 print("Starting simulation: ", name)
 
 path_to_save = "/home/lapo/Desktop/Uni/CellCompetition/TripleCompetition/Files"
-path_to_save = "/mnt/CellCompetition/TripleCompetition/Files"
+path_to_save = "/mnt/CellCompetition/Data/Files"
 file_name = os.path.join(path_to_save, name)
 
 #CompuCellSetup.register_steppable(steppable=countType1(frequency=1))
