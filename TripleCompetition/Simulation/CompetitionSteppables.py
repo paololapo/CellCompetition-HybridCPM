@@ -476,7 +476,7 @@ class DeathSteppablePerimiter(SteppableBasePy):
         if mcs > relaxtime:  # Skip apoptosis calculations during the relaxation period
             for cell in self.cellList:  # Iterate over all cells in the simulation
                 # Skip cells of type 3 (no apoptosis for these cells)
-                if cell.type == 3: break
+                if cell.type == 3: continue
                 
                 # Determine whether the cell is scrambled or wild-type
                 typecell = 2 if cell.type == 2 else 1
