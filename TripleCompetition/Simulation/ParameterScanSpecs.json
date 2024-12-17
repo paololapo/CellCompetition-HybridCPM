@@ -1,8 +1,8 @@
 {
     "version": "4.6.0",
     "parameter_list": {
-        "J23": {
-            "values": [1, 13]
+        "CI": {
+            "values": [0.05, 0.1, 0.2, 0.5, 1]
         }
     }
 }
