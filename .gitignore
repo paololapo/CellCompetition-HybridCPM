@@ -2,3 +2,4 @@
 *.pyo
 *.sqlite
 /Data/Files/Scan*
+/Data/Files/SimpleAnalysis.ipynb
